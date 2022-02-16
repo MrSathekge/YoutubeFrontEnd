@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Uchen&display=swap" rel="stylesheet"> 
+    
+    <link rel="stylesheet" type="text/css" href="Youtube/youtube.css">
+    <title>Caron Youtube App</title>
+
+    <style>
+        p{
+            font-family: Roboto, Arial;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+
+        .thumbnail{
+            /* we remove the width, so that our grid auto resizes with screen 
+            width: 300px; /* when we set width, the height also 
+            changes to fit the dimensions, doesnt stretch out*/
+           /* height: 300px;
+            object-fit: contain; /* Contain - img shrinks until it is contained in our area*/
+           /* object-position: left; /* or right side of img if img doesnt fit into our area
+                                or top or bottom*/
+            /*display: block; /* Pushes Search Bar to new line*/
+            width: 100%; /* width of pictures, 100% of the container*/
+
+        }
+
+        /*General.css style folder*/
+        body{
+            margin:0;
+            padding-top: 60px;
+            height: 2000px;
+            padding-left: 95px; /* more than side bar of 72*/
+            padding-right: 24px;
+            background-color: rgb(245, 245, 245);
+        }
+
+        .header{
+            height: 55px;
+            display: flex;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color:rgba(97, 97, 97, 0.25);
+            z-index: 100; /* So that it can always be above
+            comment it and scroll the page to see the effect against the thumbnail-row*/
+        }
+
+        .sidebar{ 
+            position: fixed;
+            left: 0;
+            top: 55px;  /* Because our header is 55px*/
+            bottom: 0;
+            background-color: white;
+            width: 72px;
+            z-index: 200; /* To make sidebar above header*/
+            padding-top: 65px; /* So it aligns with videos*/
+            
+        }
+
+        .sidebar-link{
+            height: 74px;
+            /* The next 3 go together*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column; /* moves them below*/
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover{
+            background-color: rgb(231, 231, 231);
+        }
+
+        /* Targeting all img's inside sidebar link*/
+        .sidebar-link img{
+            height: 30px;
+            margin-bottom: 4px;
+        
+        }
+
+        .sidebar-link div{
+            font-family: Roboto, Arial;
+            font-size: 10px;
+        }
+
+        
+        .left-section{
+            display:flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .hamburger-menu{
+            height: 20px;
+            margin-left: 24px;
+            margin-right: 24px;
+        }
+
+        .youtube-logo{
+            height: 20px;
+        }
+
+        .search-bar{
+            flex: 1;
+            height: 30px;
+            padding-left: 10px;
+            font-size: 16px;
+            border: 1px solid rgb(97, 97, 97);
+            border-radius: 2.5px;
+            box-shadow: inset 1px 2px 5px rgba(0, 0, 0, 0.15);
+            width: 0; /* remove default width*/
+        }
+
+        .search-bar::placeholder{
+            font-family: Roboto, Arial;
+            font-size: 16px;
+            
+        }
+
+        .middle-section{
+            flex: 1;
+            margin-left: 70px;
+            margin-right: 30px;
+            max-width: 450px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            
+        }
+
+        .search-button{ /* Our Container*/
+            height: 35px;
+            width: 55px;
+            background-color: rgb(240, 240, 240);
+            border: 1px solid rgb(212, 211, 211);
+            margin-left: -1px;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .search-button .tooltip,
+        .voice-search-button .tooltip,
+        .youtube-apps-icon-container .tooltip{
+            font-family: Roboto, Arial;
+            position: absolute;
+            background-color: grey;
+            color: white;
+            padding: 2px 4px 2px 4px; /* top right bottom left*/
+            border-radius: 2px;
+            font-size: 12px;
+            bottom: -30px;
+            opacity: 0; /*invisible, then we're gonna set opacity to 1 on hover*/
+            transition: opacity 0.3s;
+            pointer-events: none; /* Prevent hover effect on actual tooltip
+            when mouse hovers over tooltip, it wont do anything
+            */
+            white-space: nowrap;    /* the long tooltip wont be on many differnt lines, it will put it on 1 line*/
+            
+        }
+
+        .search-button:hover .tooltip,
+        .voice-search-button:hover .tooltip,
+        .youtube-apps-icon-container:hover .tooltip{
+            opacity: 1;
+        
+        }
+
+        .search-icon{
+            height: 25px;
+        }
+
+        .voice-search-icon{
+            height: 25px;
+        }
+
+        .voice-search-button{
+            height: 35px;
+            width: 40px;
+            border-radius: 20px;
+            border: none;
+            background-color: rgb(223, 222, 222);
+        }
+
+        .search-button,
+        .voice-search-button,
+        .youtube-apps-icon-container{
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;    /* It will align th elong tooltip on center*/
+        }
+
+        .youtube-apps-icon{
+            height: 25px;
+        }
+
+        .notifications-icon{
+            height: 25px;
+        }
+
+        .current-user-picture{
+            height: 30px;
+            border-radius: 15px;
+        }
+
+
+        .right-section{
+            width: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-right: 20px;
+            flex-shrink: 0; /* dont shrink*/
+            cursor: pointer;
+        }
+
+        .notifications-icon-container{
+           position: relative;
+        }
+
+        .notifications-count{
+            position: absolute;
+            top: -2px;
+            right: -5px;
+            color: white;
+            background-color: rgb(204, 1, 1);
+            font-family: Roboto, Arial;
+            font-size: 12px;
+            border-radius: 6px;
+            /* Spacing isnide of the element*/
+            padding-left: 4px;
+            padding-right: 4px;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            
+            
+        }
+
+        .video-author,
+        .video-stats{
+           /* display: inline-block;  paragraphs by default are display block*/
+            font-size: 12px;
+            color: rgb(96, 96, 96);
+        }
+
+        .video-author{
+            margin-bottom: 2px;
+        }
+
+        .video-title{
+            margin-top: 0;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 20px;
+            margin-bottom: 8px;
+        }
+
+        .video-info-grid{
+            display: grid;
+            grid-template-columns: 50px 1fr;
+        }
+
+        .channel-picture{
+            /*display: inline-block;  They are still. So we have to decrease the widths of each
+            width: 50px;*/
+            vertical-align: top;
+            
+        }
+
+       /* .video-info{
+           /* display: inline-block;
+            width: 200px; we removed these coz we used grids
+        }*/
+
+        .profile-picture{
+            width: 36px;    /* if 100%, It will take 100% of the width of the container that it is in, which is 50px*/
+            border-radius: 50px;
+        }
+
+        .thumbnail-row{
+            margin-bottom: 6px;
+            position: relative; /*doesnt change anything, we doing it for video-time.
+            to put positition: absolute inside*/
+            
+        }
+
+        .video-grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            column-gap: 15px;
+            row-gap: 40px;
+            margin-top: 60px;
+
+            
+        }
+
+
+        .video-time{
+            background-color: black;
+            color: white;
+            position: absolute;
+            bottom: 10px;
+            right: 7px;
+            font-family: Roboto, Arial;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 2px 4px 2px 4px; /*top right bottom left*/
+            border-radius: 2.5px;
+            
+        }
+
+        /* Media query for responsive design*/
+        
+        @media (max-width: 750px){
+            .video-grid{
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 751px) and (max-width: 999px){
+            .video-grid{
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1000px){
+            .video-grid{
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+
+
+    </style>
+
+    <!-- Nested Layout Techniques- Vertical and Horizontal-->
+
+</head>
+<body>
+
+    <header class="header">
+        <div class="left-section">
+            <img class="hamburger-menu" src="icons/hamburger-menu.svg">
+            <img class="youtube-logo" src="icons/youtube-logo.svg">
+        </div>
+
+        <div class="middle-section">
+            <input class="search-bar" type="text" placeholder="Search">
+            <button class="search-button">
+                <img class="search-icon" src="icons/search.svg">
+                <div class="tooltip">Search</div>
+                <button class="voice-search-button">
+                    <img class="voice-search-icon" src="icons/voice-search-icon.svg">
+                    <div class="tooltip">Search with voice</div>
+                </button>
+            
+            </button>
+
+        </div>
+        <div class="right-section">
+            <div class="youtube-apps-icon-container">
+                <img class="youtube-apps-icon" src="icons/youtube-apps.svg">
+                <div class="tooltip">Youtube Apps</div>
+
+            </div>
+
+            <div class="notifications-icon-container">
+                <img class="notifications-icon" src="icons/notifications.svg">
+                <div class="notifications-count">5</div>
+            </div>
+            <img class="current-user-picture" src="channel-pictures/caron-profile.jpg">
+
+        </div>
+    </header>
+
+    <nav class="sidebar">
+        <div class="sidebar-link">
+            <img src="icons/home.svg">
+            <div>Home</div>
+            
+        </div>
+        <div class="sidebar-link">
+            <img src="icons/explore.svg">
+            <div>Explore</div>
+        </div>
+        <div class="sidebar-link">
+            <img src="icons/subscriptions.svg">
+            <div>Subscriptions</div>
+        </div>
+        <div class="sidebar-link">
+            <img src="icons/library.svg">
+            <div>Library</div>
+        </div>
+
+    </nav>
+    <main>
+    <section class="video-grid">
+        <div class="video-preview">
+            <div class="thumbail-row">
+            <img class="thumbnail" src="thumbnails/thumbnail-1.webp">
+            <div class="video-time">14:20</div>
+            </div>
+            
+            <div class="video-info-grid">
+                <!--Vertical Divs and make them inline block so they can appear next to each other-->
+                <div class="channel-picture">
+                    <img class="profile-picture" src="channel-pictures/channel-1.jpeg">
+                </div>
+                <div class="video-info"><p class="video-title">Talking Tech and AI with Google CEO Sundar Pichai!</p>
+                    <p class="video-author">Marques Brownie</p>
+                    <p class="video-stats">3.4M views &#183; 6 months ago</p></div>
+            
+            </div>
+        </div>
+    
+        <div class="video-preview">
+            <div class="thumbail-row">
+            <img class="thumbnail" src="thumbnails/thumbnail-2.webp">
+            </div>
+            
+            <div class="video-info-grid">
+                <!--Vertical Divs and make them inline block so they can appear next to each other-->
+                <div class="channel-picture">
+                    <img class="profile-picture" src="channel-pictures/channel-2.jpeg">
+                </div>
+                <div class="video-info"><p class="video-title">Try Not To Laugh Challenge #9</p>
+                    <p class="video-author">Markpiler</p>
+                    <p class="video-stats">90M views &#183; 4 years ago</p></div>
+            
+            </div>
+        </div>
+    
+        <div class="video-preview">
+            <div class="thumbail-row">
+            <img class="thumbnail" src="thumbnails/thumbnail-3.webp">
+            </div>
+            
+            <div class="video-info-grid">
+                <!--Vertical Divs and make them inline block so they can appear next to each other-->
+                <div class="channel-picture">
+                    <img class="profile-picture" src="channel-pictures/channel-3.jpeg">
+                </div>
+                <div class="video-info"><p class="video-title">Try Not To Laugh Challenge #9</p>
+                    <p class="video-author">Markpiler</p>
+                    <p class="video-stats">90M views &#183; 4 years ago</p></div>
+            
+            </div>
+        </div>
+    
+        <div class="video-preview">
+            <div class="thumbail-row">
+            <img class="thumbnail" src="thumbnails/thumbnail-4.webp">
+            </div>
+            
+            <div class="video-info-grid">
+                <!--Vertical Divs and make them inline block so they can appear next to each other-->
+                <div class="channel-picture">
+                    <img class="profile-picture" src="channel-pictures/channel-4.jpeg">
+                </div>
+                <div class="video-info"><p class="video-title">Try Not To Laugh Challenge #9</p>
+                    <p class="video-author">Markpiler</p>
+                    <p class="video-stats">90M views &#183; 4 years ago</p></div>
+            
+            </div>
+        </div>
+    
+        <div class="video-preview">
+            <div class="thumbail-row">
+            <img class="thumbnail" src="thumbnails/thumbnail-2.webp">
+            </div>
+            
+            <div class="video-info-grid">
+                <!--Vertical Divs and make them inline block so they can appear next to each other-->
+                <div class="channel-picture">
+                    <img class="profile-picture" src="channel-pictures/channel-2.jpeg">
+                </div>
+                <div class="video-info"><p class="video-title">Try Not To Laugh Challenge #9</p>
+                    <p class="video-author">Markpiler</p>
+                    <p class="video-stats">90M views &#183; 4 years ago</p></div>
+            
+            </div>
+        </div>
+    
+        <div class="video-preview">
+            <div class="thumbail-row">
+            <img class="thumbnail" src="thumbnails/thumbnail-2.webp">
+            </div>
+            
+            <div class="video-info-grid">
+                <!--Vertical Divs and make them inline block so they can appear next to each other-->
+                <div class="channel-picture">
+                    <img class="profile-picture" src="channel-pictures/channel-2.jpeg">
+                </div>
+                <div class="video-info"><p class="video-title">Try Not To Laugh Challenge #9</p>
+                    <p class="video-author">Markpiler</p>
+                    <p class="video-stats">90M views &#183; 4 years ago</p></div>
+            
+            </div>
+        </div>
+
+    </section>
+</main>
+    
+
+
+</body>
+</html>
